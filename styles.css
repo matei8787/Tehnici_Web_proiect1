@@ -25,7 +25,6 @@ body
 }
 .navigare
 {
-    overflow: hidden;
     position: fixed;
     top: 0;
     left: 0;
@@ -48,14 +47,70 @@ body
     padding-right: 2vw;
     display: flex;
     flex-direction: row-reverse;
+    align-items: center;
     gap: 5px;
 }
+.dropbtn 
+{
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    background-color: red;
+}
+.wrapper-dropdown
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 200px;
+}
+.dropdown 
+{
+    display: inline-block;
+
+}
+
+.dropdown-content
+ {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a 
+{
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover 
+{
+    background-color: #f1f1f1;
+    overflow: visible;
+}
+
+.dropdown:hover .dropdown-content 
+{
+    overflow: visible;
+    display: block;
+}
+
 @keyframes imagine-eu-anim {
     from{
         opacity: 0;
+        z-index: -1;
     }
     to{
         opacity: 1;
+        z-index: -1;
     }
 }
 .imagine-eu
@@ -82,8 +137,10 @@ body
 }
 .carduri
 {
-    gap: 5vw;
+    gap: 5vh;
+    width: 100%;
     display: flex;
+    flex-direction: column;
 }
 .tabel-preturi
 {
@@ -104,43 +161,44 @@ body
 .card
 {
     display: flex;
-    flex-direction: column;
-    height: 8vh;
+    flex-direction: row;
+    height: 10vh;
+    left: 0px;
+    width: 20vw;    
     border: 1px solid;
     border-radius: 10%;
     border-color: red;
     border-width: 2px;
-    transition: height 1s;
+    transition: width 0.8s;
     overflow: hidden;
-}
-#card1
-{
-    transition-timing-function: linear;
-}
-#card2
-{
-    transition-timing-function: linear;
-}
-#card3
-{
-    transition-timing-function: linear;
-}
-#card4
-{
-    transition-timing-function: linear;
 }
 .card:hover
 {
-    height: 40vh;
+    width: 80vw;
 }
-
+.container-titlu-card
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: inherit;
+}
 .titlu-card
 {
     text-align: center;
 }
+.container-descriere
+{
+    overflow: visible;
+    padding-left: 15vw;
+}
 .descriere-card
 {
+    text-align: center;
     padding-left: 1vw;
     padding-right: 1vw;
 
 }
+
+
