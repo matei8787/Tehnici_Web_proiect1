@@ -1,0 +1,26 @@
+{
+  "name": "site-fara-bootstrap",
+  "version": "1.0.0",
+  "description": "Nu stiu ce sa pun aici",
+  "main": "scripts.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matei8787/Tehnici_Web_proiect1.git"
+  },
+  "author": "Dobrea Matei-Alexandru",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matei8787/Tehnici_Web_proiect1/issues"
+  },
+  "homepage": "https://github.com/matei8787/Tehnici_Web_proiect1#readme",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "formidable": "^3.5.1",
+    "html": "^1.0.0"
+  }
+}
