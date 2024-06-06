@@ -1,30 +1,24 @@
 const PUBLIC_STRIPE_KEY = 'pk_test_51KPDshJoqxHUT3I8i4QpsNWzH43cHpOWAUrMWHjC10j1MgCONOIw2E3rvZ8KNyeRCQpMtzf0t3kUfF1GjSkuJolq00tAzQjea7' 
-const stript = Stripe(PUBLIC_STRIPE_KEY)
+const stripe = Stripe(PUBLIC_STRIPE_KEY)
 
-async function fetchConnectionToken()
+
+async function main()
 {
-    const res = await fetch('localhost:5000/cumpara', {method: 'POST'})
-    const data = await res.json()
-    return data.clientSecret;
-}
-
-function unexpectedDisconnect()
-{
-    alert("Ceva e nasol")
-}
-
-
-function main()
-{
-    const checkout = stripe.initEmbeddedCheckout({
-        fetchConnectionToken,
+    const fetchClientSecret  = async () => {
+        const res = await fetch("/cumpara", {
+            method: "POST",
+        });
+        const {clientSecret} = await res.json()
+        return clientSecret;
+    };
+    const checkout = await stripe.initEmbeddedCheckout({
+        fetchClientSecret,
     });
 
-    console.log("Before Mounting")
 
     checkout.mount('#div-form-cumpara');
 
-    console.log("After mounting")
+    
 }
 
-main()
+window.onload = main

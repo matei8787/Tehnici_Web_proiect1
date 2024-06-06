@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/matei8787/Tehnici_Web_proiect1#readme",
   "dependencies": {
+    "body-parser": "^1.20.2",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "express-session": "^1.18.0",

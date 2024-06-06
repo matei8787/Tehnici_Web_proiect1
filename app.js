@@ -1,3 +1,5 @@
+const PRIVATE_STRIPE_KEY = 'sk_test_51KPDshJoqxHUT3I8St2pQpUsMchpmrla8BKa285bFN64IX12uBvDyAdWUOcOIrt8L5cqQ9dU91yu9uP2lwBPjKic00lAJTaaXG' ///ilegal :))
+const stripe = require('stripe')(PRIVATE_STRIPE_KEY)
 const express = require('express')
 var app = express()
 const ejs = require('ejs')
@@ -6,16 +8,18 @@ const session = require('express-session')
 const formidable = require('formidable')
 const fs = require('fs')
 const DIR_BAZA = './baza_useri'
-const PRIVATE_STRIPE_KEY = 'sk_test_51KPDshJoqxHUT3I8St2pQpUsMchpmrla8BKa285bFN64IX12uBvDyAdWUOcOIrt8L5cqQ9dU91yu9uP2lwBPjKic00lAJTaaXG' ///ilegal :))
-const stripe = require('stripe')(PRIVATE_STRIPE_KEY)
+var bodyParser = require('body-parser')
+
 
 
 
 function pre()
 {
     app.use(express.static('public'))
-
+    app.set('view engine','ejs');
     app.set('views', 'pagini');
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
     app.use(session({
         secret: 'tablou', ///voiam sa injur, dar am zis lasa
         resave: true,
@@ -72,7 +76,7 @@ async function baga_rute_get()
 function User(username, parola)
 {
     this.username = username
-    this.parola = parola
+    this.password = parola
 }
 
 function exista(username)
@@ -93,28 +97,34 @@ function verifica(username, parola)
     return new User(username, parola);
 }
 
-async function baga_rute_post()
+function baga_rute_post()
 {
     app.post('/login', function(req, res){
-        var forma = new formidable.IncomingForm();
-        forma.parse(req, function(err, fields, files)
-        {
-            user = verifica(fields.username, fields.password)
-            if ( user == null )
-                req.session.user = false;
-            else
-                req.session.user = user;
-        })
+        const {username, password} = req.body
+        console.log(username)
+        console.log(password)
+        var user = verifica(username, password)
+        if ( user == null )
+            req.session.user = false;
+        else
+            req.session.user = user;
         res.redirect('/')
     })
 
     app.post('/create_user', function(req, res){
-        var forma = new formidable.IncomingForm({uploadDir: DIR_BAZA, keepExtensions: true});
-        forma.parse(req, function(err, fields, files){
-            var user = new User(fields.username, fields.password)
-            console.log(user)
-            
-        })
+        const {username, password} = req.body
+        console.log(username)
+        console.log(password)
+        var user = verifica(username, password)
+        if ( user == null )
+        {
+            let director = DIR_BAZA + '/' + username + '.txt'
+            fs.writeFileSync(director, req.body.password)
+        }
+        else
+        {
+            req.session.user = user;
+        }
         res.redirect('/')
         
     })
@@ -126,12 +136,12 @@ async function baga_rute_post()
             line_items: [
                 {
                     ///aici bag chestii de vandut
-                    price: 'Toti banii (999)',
+                    price: 'price_1KrlElJoqxHUT3I81LBkeT4B',
                     quantity: 10,
                 },
             ],
             mode: 'payment',
-            return_url: 'localhost:5000/plata_procesata.html?session_id={CHECKOUT_SESSION_ID}'
+            return_url: 'http://localhost:5000?session_id={CHECKOUT_SESSION_ID}'
         });
         res.send({clientSecret: session.client_secret});
     })
